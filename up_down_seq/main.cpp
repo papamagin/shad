@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 template<typename T> std::vector<T> getInput(const int size) {
     std::vector<T> res;
@@ -24,8 +25,8 @@ int main(int argc, char const *argv[])
     std::vector<int> withRiseAtTheEnd(inputDataSize, 1);
     std::vector<int> withDescentAtTheEnd(inputDataSize, 1);
     int longestSize = 1;
+    int indexWithLongest = 0;
 
-    std::cout << data.at(0) << " ";
     for ( int index = 1; index < inputDataSize; ++index ) {
         for ( int jindex = 0; jindex < index; ++jindex ) {
 
@@ -41,14 +42,19 @@ int main(int argc, char const *argv[])
                 withDescentAtTheEnd.at(index) = withRiseAtTheEnd.at(jindex) + 1;
             }
 
-            const int localMax = std::max(withRiseAtTheEnd.at(index), withDescentAtTheEnd.at(index));
+            const int localMax = std::max(
+                withRiseAtTheEnd.at(index), 
+                withDescentAtTheEnd.at(index)
+            );
             if ( longestSize < localMax ) {
                 longestSize = localMax;
-                std::cout << data.at(index) << " ";
+                std::cout << data.at(jindex) << " ";
+                indexWithLongest = index;
             }
-
         }
     }
+
+    std::cout << data.at(indexWithLongest);
 
     return 0;
 }
